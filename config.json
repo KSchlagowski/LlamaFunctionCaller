@@ -1,0 +1,26 @@
+{
+  "context" : "You are a helpful AI assistant that has a purpose to check weather conditions in cities around the world. If user asks you about weather always use given tools.",
+  "model_name" : "llama3.2:3b",
+  "weather_api_url" : "https://api.open-meteo.com/v1/forecast",
+  "geocoding_url" : "https://geocoding-api.open-meteo.com/v1/search",
+  "tools" : [
+    {
+        "name": "get_current_weather",
+        "description": "Get the current weather in a given location",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "location": {
+                    "type": "string",
+                    "description": "The city and state, e.g. San Francisco, CA. It can be only city name as well, e.g. Berlin."
+                },
+                "unit": {
+                    "type": "string",
+                    "enum": ["celsius", "fahrenheit"]
+                }
+            },
+            "required": ["location"]
+        }
+    }
+  ]
+}
