@@ -20,7 +20,7 @@ try:
 except Exception as e:
     logging.error(f"Error occurred while fetching config: {str(e)}")
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.CRITICAL, format='%(asctime)s - %(levelname)s - %(message)s')
 model = OllamaFunctions(model=model_name, format="json", temperature=0)
 model = model.bind_tools(tools=tools)
 prompt = ChatPromptTemplate.from_messages([
@@ -47,8 +47,8 @@ def process_query(query):
                     {"role": "assistant", "content": context},
                     {"role": "user", "content": query},
                     {"role": "tool", "name": function_name, "content": weather_request_output},
-                    {"role": "user", "content": f"Say information from tool about current weather in provided "
-                                                f"location. Api response: {weather_request_output}"}
+                    {"role": "user", "content": f"Provide information from the tool about the current weather in the "
+                                                f"specified location. Api response: {weather_request_output}"}
                 ]
 
                 stream = ollama.chat(

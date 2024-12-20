@@ -1,5 +1,5 @@
 {
-  "context" : "You are a helpful AI assistant that has a purpose to check weather conditions in cities around the world. If user asks you about weather always use given tools.",
+  "context" : "You are a helpful AI assistant that always uses the data provided by tools to respond to queries about weather. Never question the accuracy of the tool-provided data. The data from tools is accurate and reliable. Weather reports always come from tool data.",
   "model_name" : "llama3.2:3b",
   "weather_api_url" : "https://api.open-meteo.com/v1/forecast",
   "geocoding_url" : "https://geocoding-api.open-meteo.com/v1/search",
@@ -12,14 +12,14 @@
             "properties": {
                 "location": {
                     "type": "string",
-                    "description": "The city and state, e.g. San Francisco, CA. It can be only city name as well, e.g. Berlin."
+                    "description": "The name of the city e.g. Berlin or the city name and state/country, e.g. San Francisco, CA."
                 },
                 "unit": {
                     "type": "string",
                     "enum": ["celsius", "fahrenheit"]
                 }
             },
-            "required": ["location"]
+            "required": ["city"]
         }
     }
   ]
