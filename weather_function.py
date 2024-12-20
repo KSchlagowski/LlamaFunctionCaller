@@ -1,11 +1,5 @@
-import ollama
-# import chainlit as cl
 import requests
-from langchain_experimental.llms.ollama_functions import OllamaFunctions
-from langchain.prompts import ChatPromptTemplate
-from langchain.schema import SystemMessage
 import logging
-import json
 
 geocoding_url = ''
 weather_api_url = ''
@@ -57,7 +51,7 @@ def get_current_weather(location, geo_params_for_weather_api, unit):
         temp = current_weather["temperature"]
         wind_speed = current_weather["windspeed"]
 
-        result = f"The current weather in {location} is {temp}°{unit.upper()} with a wind speed of {wind_speed} km/h."
+        result = f"{temp}°{unit.upper()} with a wind speed of {wind_speed} km/h."
         logging.info(f"Weather result: {result}")
         return result
     else:
@@ -80,6 +74,10 @@ def process_weather_request(location, unit="celsius"):
 
     try:
         geo_params_for_weather_api = get_location_coordinates(location, params_for_geo_api, unit)
+        if isinstance(geo_params_for_weather_api, str):
+            logging.warning(f"Failed to fetch coordinates: {geo_params_for_weather_api}")
+            return geo_params_for_weather_api
+
         weather_info = get_current_weather(location, geo_params_for_weather_api, unit)
         return weather_info
     except requests.exceptions.RequestException as e:

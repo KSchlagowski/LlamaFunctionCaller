@@ -1,12 +1,11 @@
 import ollama
-# import chainlit as cl
-import requests
 from langchain_experimental.llms.ollama_functions import OllamaFunctions
 from langchain.prompts import ChatPromptTemplate
 from langchain.schema import SystemMessage
 import logging
 import json
 import weather_function
+import types
 
 config_file_name = "config.json"
 
@@ -43,8 +42,31 @@ def process_query(query):
             logging.info(f"Function call: {function_name}, Args: {args}")
 
             if function_name == "get_current_weather":
-                return weather_function.process_weather_request(**args)
+                weather_request_output = weather_function.process_weather_request(**args)
+                messages = [
+                    {"role": "assistant", "content": context},
+                    {"role": "user", "content": query},
+                    {"role": "tool", "name": function_name, "content": weather_request_output},
+                    {"role": "user", "content": f"Say information from tool about current weather in provided "
+                                                f"location. Api response: {weather_request_output}"}
+                ]
+
+                stream = ollama.chat(
+                    model=model_name,
+                    messages=messages,
+                    stream=True
+                )
+
+                return stream
     return result.content
+
+
+def print_model_response(response):
+    if isinstance(response, types.GeneratorType):
+        for chunk in response:
+            print(chunk['message']['content'], end='')
+    else:
+        print(response)
 
 
 if __name__ == "__main__":
@@ -54,6 +76,7 @@ if __name__ == "__main__":
         if message == "/exit":
             break
         output = process_query(message)
-        print(output)
+        print_model_response(output)
+
 
 
