@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This project is an Python-based AI-powered chatbot that can fetch real-time weather data. It leverages the LangChain and Ollama models to interpret user input and fetch weather data. This assistant demonstrates the integration of AI with external APIs and prompt engineering to perform practical tasks like weather forecasting.
+This project is an Python-based AI-powered chatbot that can fetch real-time weather data. It leverages the LangChain and Llama 3.2 3B to interpret user input and fetch weather data. This assistant demonstrates the integration of AI with external APIs and prompt engineering to perform practical tasks like weather forecasting.
 
 ## Features
 
@@ -11,7 +11,7 @@ This project is an Python-based AI-powered chatbot that can fetch real-time weat
 - **AI-driven**: Uses LangChain and Ollama for natural language understanding and response generation.
 
 ## How It Works
-The project uses a language model from Ollama, enhanced by LangChain's function calling capability, to process queries. When a user inputs a query, the model determines if a weather request is necessary. If so, it calls a function to fetch weather data using geolocation and weather APIs.
+The project uses a Llama 3.2 3B from Ollama, enhanced by LangChain's function calling capability, to process queries. When a user inputs a query, the model determines if a weather request is necessary. If so, it calls a function to fetch weather data using geolocation and weather APIs.
 
 ![Gif](https://github.com/user-attachments/assets/aab4ccb1-5ca0-4f11-a66e-be4ab54f0e8e)
 
@@ -24,7 +24,7 @@ The project uses a language model from Ollama, enhanced by LangChain's function 
 ## Requirements
 
 - Python 3.7 or later
-- Ollama installed and running
+- Ollama installed and running with Llama 3.2 3B
 - Internet connection (for API requests)
 
 ## Dependencies
@@ -56,6 +56,10 @@ requests
    pip install -r requirements.txt
    ```
 3. Ensure Ollama is installed and running. Refer to [Ollama documentation](https://github.com/jmorganca/ollama) for installation instructions.
+4. Pull Llama 3.2 3B model:
+   ```
+   ollama pull llama3.2:3b
+   ```
 
 ## Usage
 
@@ -71,7 +75,7 @@ requests
 ### How it Works
 
 1. **User Input**: User enters a query (e.g., "Weather in Paris").
-2. **AI Processing**: Ollama processes the input and identifies the intent (weather request).
+2. **AI Processing**: Llama 3.2 3B processes the input and identifies the intent (weather request).
 3. **Function Call**: The chatbot calls the relevant function (weather retrieval).
 4. **API Call**: The bot fetches data from Open-Meteo API.
 5. **Response**: The chatbot displays the result in the console.
